@@ -1,9 +1,9 @@
-# The manifest for the "pipeline-stagging-ecs-express" pipeline.
+# The manifest for the "pipeline-ecs-express-ecs-express" pipeline.
 # This YAML file defines your pipeline: the source repository it tracks and the order of the environments to deploy to.
 # For more info: https://aws.github.io/copilot-cli/docs/manifest/pipeline/
 
 # The name of the pipeline.
-name: pipeline-stagging-ecs-express
+name: pipeline-ecs-express-ecs-express
 
 # The version of the schema used in this template.
 version: 1
@@ -26,13 +26,6 @@ stages:
       name: test
       # Optional: flag for manual approval action before deployment.
       # requires_approval: true
-      # Optional: use test commands to validate this stage of your build.
-      # test_commands: [echo 'running tests', make test]
-
-    - # The name of the environment.
-      name: prod
-      # Optional: flag for manual approval action before deployment.
-      requires_approval: true
       # Optional: use test commands to validate this stage of your build.
       # test_commands: [echo 'running tests', make test]
 

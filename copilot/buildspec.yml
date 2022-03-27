@@ -80,9 +80,8 @@ phases:
           if [ -f "$ADDONSFILE" ]; then
             tmp=$(mktemp)
             timestamp=$(date +%s)
-            aws s3 cp "$ADDONSFILE" "s3://stackset-stagging-infras-pipelinebuiltartifactbuc-1kquooulkacbt/manual/$timestamp/$workload.addons.stack.yml";
-            jq --arg a "https://stackset-stagging-infras-pipelinebuiltartifactbuc-1kquooulkacbt.s3.ap-southeast-1.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-test.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-test.params.json
-            jq --arg a "https://stackset-stagging-infras-pipelinebuiltartifactbuc-1kquooulkacbt.s3.ap-southeast-1.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-prod.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-prod.params.json
+            aws s3 cp "$ADDONSFILE" "s3://stackset-ecs-express-inf-pipelinebuiltartifactbuc-1t4cbrsivqiq6/manual/$timestamp/$workload.addons.stack.yml";
+            jq --arg a "https://stackset-ecs-express-inf-pipelinebuiltartifactbuc-1t4cbrsivqiq6.s3.ap-southeast-1.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-test.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-test.params.json
           fi
         done;
       # If env file exists, upload the env file to each S3 bucket and write template URL to template config files.
@@ -102,14 +101,8 @@ phases:
               if [ $env = test ]; then
                 tmp=$(mktemp)
                 checksum=$(cat $ENVFILE | sha256sum | head -c 64)
-                aws s3 cp "$ENVFILE" "s3://stackset-stagging-infras-pipelinebuiltartifactbuc-1kquooulkacbt/manual/$checksum/$env_file";
-                jq --arg a "arn:$PARTITION:s3:::stackset-stagging-infras-pipelinebuiltartifactbuc-1kquooulkacbt/manual/$checksum/$env_file" '.Parameters.EnvFileARN = $a' ./infrastructure/$workload-test.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-test.params.json
-              fi
-              if [ $env = prod ]; then
-                tmp=$(mktemp)
-                checksum=$(cat $ENVFILE | sha256sum | head -c 64)
-                aws s3 cp "$ENVFILE" "s3://stackset-stagging-infras-pipelinebuiltartifactbuc-1kquooulkacbt/manual/$checksum/$env_file";
-                jq --arg a "arn:$PARTITION:s3:::stackset-stagging-infras-pipelinebuiltartifactbuc-1kquooulkacbt/manual/$checksum/$env_file" '.Parameters.EnvFileARN = $a' ./infrastructure/$workload-prod.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-prod.params.json
+                aws s3 cp "$ENVFILE" "s3://stackset-ecs-express-inf-pipelinebuiltartifactbuc-1t4cbrsivqiq6/manual/$checksum/$env_file";
+                jq --arg a "arn:$PARTITION:s3:::stackset-ecs-express-inf-pipelinebuiltartifactbuc-1t4cbrsivqiq6/manual/$checksum/$env_file" '.Parameters.EnvFileARN = $a' ./infrastructure/$workload-test.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-test.params.json
               fi
             fi
           done;
